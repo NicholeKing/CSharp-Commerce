@@ -1,0 +1,51 @@
+<h1>Welcome, @ViewBag.Person.Name</h1>
+<a href="/AddProduct" class="btn btn-primary">+ Sell Something</a>
+<a href="/MyCart" class="btn btn-info">My Cart (@ViewBag.Cart)</a>
+<a href="/MyOrders" class="btn btn-success">Order History</a>
+<a href="/logout" style="float:right;">Logout</a>
+<hr>
+<h2>Things I'm selling</h2>
+    @{
+        foreach(var i in ViewBag.Person.Stock)
+        {
+            <div class="card" style="width: 18rem; display: inline-block;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="product/@i.PID">@i.Name</a></h5>
+                    <p class="card-text">$@i.Price.ToString("F")</p>
+                    <p class="card-text">Supply left: @i.Quantity</p>
+                    <div style="float:right;">
+                        <a href="/edit/@i.Seller.UserId/@i.PID">Edit</a> | <a href="/Delete/@i.PID">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+<hr>
+<h2>All other products</h2>
+@{
+    foreach(var i in ViewBag.Others)
+    {
+        <div class="card" style="width: 18rem; display: inline-block;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="product/@i.PID">@i.Name</a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Seller: @i.Seller.Name</h6>
+                    <p class="card-text">$@i.Price.ToString("F")</p>
+                    <p class="card-text">Supply left: @i.Quantity</p>
+                    <div style="float:right;">
+                        <form action="/AddToCart/@i.PID" method="post">
+                            <select name="quant" class="form-control col-sm-8">
+                                @{
+                                    for(var k = 1; k <= i.Quantity; k++)
+                                    {
+                                        <option value="@k">@k</option>
+                                    }
+                                }
+                            </select>
+                            <input type="submit" class="btn btn-primary" value="Add to cart">
+                        </form>
+                    </div>
+                </div>
+            </div>
+    }
+}

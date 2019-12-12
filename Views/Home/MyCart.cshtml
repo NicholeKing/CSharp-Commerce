@@ -1,0 +1,26 @@
+<a href="/Dashboard">Back</a>
+<a href="/logout" style="float:right;">Logout</a>
+<h2>Your Cart</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Name of Product</th>
+        <th>Seller</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    @{
+        double total = 0;
+        foreach(var i in ViewBag.Cart)
+        {
+            <tr>
+                <td>@i.Name</td>
+                <td>@i.Seller.Name</td>
+                <td>$@i.Price.ToString("F")</td>
+                <td><a href="/RemoveFromCart/@i">Remove From Cart</a></td>
+            </tr>
+            total += i.Price;
+        }
+    }
+</table>
+<h3>Your order total: $@total.ToString("F")</h3>
+<a href="/Checkout" class="btn btn-success">Checkout</a>

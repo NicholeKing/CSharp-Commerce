@@ -1,0 +1,20 @@
+<a href="/Dashboard">Back</a>
+<a href="/logout" style="float:right;">Logout</a>
+<h2>All your orders</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Product Name</th>
+        <th>Product Seller</th>
+        <th>Price</th>
+    </tr>
+    @{
+        foreach(var i in ViewBag.AllOrders)
+        {
+            <tr>
+                <td>@i.Product.Name</td>
+                <td>@i.Product.Seller.Name</td>
+                <td>$@i.Product.Price.ToString("F")</td>
+            </tr>
+        }
+    }
+</table>
